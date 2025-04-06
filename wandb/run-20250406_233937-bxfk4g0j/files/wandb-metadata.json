@@ -1,18 +1,18 @@
 {
   "os": "Windows-10-10.0.22631-SP0",
   "python": "CPython 3.9.13",
-  "startedAt": "2025-04-06T20:00:03.114094Z",
-  "program": "c:\\Users\\Mert\\Desktop\\DI725_assignment1\\main.ipynb",
-  "codePath": "main.ipynb",
+  "startedAt": "2025-04-06T20:39:37.772437Z",
+  "program": "c:\\Users\\Mert\\Desktop\\DI725_assignment1\\prepare_customer_service.py",
+  "codePath": "prepare_customer_service.py",
   "git": {
     "remote": "https://github.com/Mertalper24/DI725_assignment1.git",
-    "commit": "7783f6a1302f9bc36b9eb6453cdbb614a10658e5"
+    "commit": "7a705e21b95fa1b6da532d1d066b19717fa4ef93"
   },
   "email": "mmertalper@gmail.com",
-  "root": "c:\\Users\\Mert\\Desktop\\DI725_assignment1",
+  "root": "C:\\Users\\Mert\\Desktop\\DI725_assignment1",
   "host": "DESKTOP-B6B30VC",
-  "executable": "c:\\Users\\Mert\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
-  "codePathLocal": "main.ipynb",
+  "executable": "C:\\Users\\Mert\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+  "codePathLocal": "prepare_customer_service.py",
   "cpu_count": 12,
   "cpu_count_logical": 16,
   "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
@@ -20,7 +20,7 @@
   "disk": {
     "/": {
       "total": "490749292544",
-      "used": "422643445760"
+      "used": "419899498496"
     }
   },
   "memory": {

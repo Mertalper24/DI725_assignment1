@@ -1,0 +1,15 @@
+{"time":"2025-04-06T23:11:13.4620503+03:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-04-06T23:11:13.4620503+03:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\Mert\\Desktop\\DI725_assignment1\\wandb\\run-20250406_231113-y0hzu0ly\\logs\\debug-core.log"}
+{"time":"2025-04-06T23:11:15.2091385+03:00","level":"INFO","msg":"created new stream","id":"y0hzu0ly"}
+{"time":"2025-04-06T23:11:15.2091385+03:00","level":"INFO","msg":"stream: started","id":"y0hzu0ly"}
+{"time":"2025-04-06T23:11:15.2091385+03:00","level":"INFO","msg":"writer: Do: started","stream_id":"y0hzu0ly"}
+{"time":"2025-04-06T23:11:15.2096424+03:00","level":"INFO","msg":"sender: started","stream_id":"y0hzu0ly"}
+{"time":"2025-04-06T23:11:15.2096424+03:00","level":"INFO","msg":"handler: started","stream_id":"y0hzu0ly"}
+{"time":"2025-04-06T23:11:15.6562171+03:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-06T23:11:15.7983949+03:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-06T23:11:16.9072827+03:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-06T23:11:23.878222+03:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-06T23:11:26.647492+03:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-06T23:11:27.3410101+03:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-04-06T23:12:53.8959643+03:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-04-06T23:12:54.8466235+03:00","level":"INFO","msg":"Pausing system monitor"}
