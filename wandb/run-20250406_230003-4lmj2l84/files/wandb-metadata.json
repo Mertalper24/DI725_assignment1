@@ -1,0 +1,42 @@
+{
+  "os": "Windows-10-10.0.22631-SP0",
+  "python": "CPython 3.9.13",
+  "startedAt": "2025-04-06T20:00:03.114094Z",
+  "program": "c:\\Users\\Mert\\Desktop\\DI725_assignment1\\main.ipynb",
+  "codePath": "main.ipynb",
+  "git": {
+    "remote": "https://github.com/Mertalper24/DI725_assignment1.git",
+    "commit": "7783f6a1302f9bc36b9eb6453cdbb614a10658e5"
+  },
+  "email": "mmertalper@gmail.com",
+  "root": "c:\\Users\\Mert\\Desktop\\DI725_assignment1",
+  "host": "DESKTOP-B6B30VC",
+  "executable": "c:\\Users\\Mert\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+  "codePathLocal": "main.ipynb",
+  "cpu_count": 12,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "490749292544",
+      "used": "422643445760"
+    }
+  },
+  "memory": {
+    "total": "16851132416"
+  },
+  "cpu": {
+    "count": 12,
+    "countLogical": 16
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+      "memoryTotal": "6439305216",
+      "cudaCores": 2560,
+      "architecture": "Ada"
+    }
+  ],
+  "cudaVersion": "12.4"
+}

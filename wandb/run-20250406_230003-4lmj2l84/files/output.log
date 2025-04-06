@@ -1,0 +1,24 @@
+WANDB initialized successfully!
+Vocabulary size: 50,261
+Train samples: 873
+Validation samples: 97
+Test samples: 30
+
+Sentiment distribution:
+Train: {'neutral': 488, 'negative': 370, 'positive': 15}
+Val: {'neutral': 54, 'negative': 41, 'positive': 2}
+Test: {'negative': 10, 'neutral': 10, 'positive': 10}
+Dataset shapes:
+Training set: (970, 11)
+Test set: (30, 11)
+
+Training set columns: ['issue_area', 'issue_category', 'issue_sub_category', 'issue_category_sub_category', 'customer_sentiment', 'product_category', 'product_sub_category', 'issue_complexity', 'agent_experience_level', 'agent_experience_level_desc', 'conversation']
+
+Sample of training data:
+
+Sentiment Distribution:
+customer_sentiment
+neutral     55.88
+negative    42.37
+positive     1.75
+Name: proportion, dtype: float64
