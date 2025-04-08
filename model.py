@@ -352,9 +352,9 @@ class SentimentGPT(nn.Module):
         }[model_type]
 
         # Add sentiment-specific config
-        config_args['vocab_size'] = 50257  # always 50257 for GPT model checkpoints
-        config_args['block_size'] = 1024   # always 1024 for GPT model checkpoints
-        config_args['bias'] = True         # always True for GPT model checkpoints
+        config_args['vocab_size'] = 50257  
+        config_args['block_size'] = 1024  
+        config_args['bias'] = True         
         config_args['num_classes'] = 3     # for sentiment analysis
         
         # Override dropout if specified

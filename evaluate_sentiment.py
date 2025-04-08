@@ -308,14 +308,6 @@ def main():
         
         f.write("Confusion Matrix:\n")
         f.write(np.array2string(metrics['confusion_matrix']) + "\n\n")
-        
-        f.write("\nReasons for Evaluation Metric Choice:\n")
-        f.write("1. Accuracy: Simple and intuitive, but not ideal for imbalanced classes.\n")
-        f.write("2. F1-Score: Balances precision and recall, critical for imbalanced data.\n")
-        f.write("   - Macro: Equal weight to each class regardless of frequency.\n")
-        f.write("   - Weighted: Takes class imbalance into account.\n")
-        f.write("3. Confusion Matrix: Visualizes where the model makes mistakes.\n")
-        f.write("4. Per-class metrics: Essential for understanding performance on minority classes.\n")
     
     print("\nEvaluation complete. Results saved to 'evaluation_metrics.txt'")
 
