@@ -1,0 +1,41 @@
+SENTIMENT ANALYSIS EVALUATION RESULTS (trained-from-scratch)
+==================================================
+
+Accuracy: 0.8763
+F1 Score (micro): 0.8763
+F1 Score (macro): 0.8110
+F1 Score (weighted): 0.8783
+
+F1 Scores per class:
+  positive: 0.6667
+  neutral: 0.8800
+  negative: 0.8864
+
+Precision (weighted): 0.8935
+Recall (weighted): 0.8763
+
+Classification Report:
+              precision    recall  f1-score   support
+
+    positive       0.50      1.00      0.67         2
+     neutral       0.96      0.81      0.88        54
+    negative       0.83      0.95      0.89        41
+
+    accuracy                           0.88        97
+   macro avg       0.76      0.92      0.81        97
+weighted avg       0.89      0.88      0.88        97
+
+
+Confusion Matrix:
+[[ 2  0  0]
+ [ 2 44  8]
+ [ 0  2 39]]
+
+
+Reasons for Evaluation Metric Choice:
+1. Accuracy: Simple and intuitive, but not ideal for imbalanced classes.
+2. F1-Score: Balances precision and recall, critical for imbalanced data.
+   - Macro: Equal weight to each class regardless of frequency.
+   - Weighted: Takes class imbalance into account.
+3. Confusion Matrix: Visualizes where the model makes mistakes.
+4. Per-class metrics: Essential for understanding performance on minority classes.

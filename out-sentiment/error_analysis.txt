@@ -1,0 +1,150 @@
+ERROR ANALYSIS
+==============
+
+negative -> neutral: 2 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Sarah. How may I assist you today?
+
+Customer: Hi Sarah, I am trying to club orders from different sellers for combined delivery, but it's not working. Can you help me with that?
+
+Agent: Sure, I'll be happy to help you with that. May I know your account details, please?
+
+Customer: My username is coffee_lover_123.
+
+Agent: Thank
+True label: negative
+Predicted label: neutral
+
+Example 2:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Jane. How may I assist you today?
+
+Customer: Hi Jane, I am having trouble with the verification process for my Smart Watch. I am not receiving the OTP or verification code on my mobile number or email.
+
+Agent: I am sorry to hear that you are facing this issue. May I know the mobile number and email address that you used for verification?
+
+Customer: Sure, my mobile number
+True label: negative
+Predicted label: neutral
+
+
+neutral -> negative: 8 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is John. How can I assist you today?
+
+Customer: Hi John, I recently purchased a headphone from your website, and I noticed that the price for the same headphone has now reduced. Can you explain why this happened?
+
+Agent: I'm sorry to hear that the price for the headphone you purchased has reduced. May I know your order number and the date of purchase?
+
+Customer: Sure, my order
+True label: neutral
+Predicted label: negative
+
+Example 2:
+Text: Customer: Hi, I need some help with claiming warranty on a replacement product for my air conditioner that I purchased from BrownBox.
+
+Agent: Hello, and thank you for contacting BrownBox customer support. I'm sorry to hear that you're having issues with your air conditioner. Can I have your order number and name, please?
+
+Customer: Sure. My order number is 987654 and my name is John Smith.
+
+Agent: Thank you, John. Let
+True label: neutral
+Predicted label: negative
+
+Example 3:
+Text: Customer: Hi, I received a wrong item in my order. I ordered a ceiling fan, but I received a table fan instead.
+
+Agent: Hello! I'm sorry to hear that you received the wrong item in your order. My name is Sarah, and I'll be happy to assist you. May I have your order number, please?
+
+Customer: Sure, it's BB876543210.
+
+Agent: Thank you for providing that information. I apologize for any
+True label: neutral
+Predicted label: negative
+
+Example 4:
+Text: Agent: Hello, thank you for contacting BrownBox customer support. My name is John. How may I assist you today?
+
+Customer: Hi John, I received the wrong item in my order. I ordered a laptop, but I received a tablet instead.
+
+Agent: I'm sorry to hear that. May I know your order number and the registered email address?
+
+Customer: Sure, my order number is #987654321, and my email address is xyz@
+True label: neutral
+Predicted label: negative
+
+Example 5:
+Text: Customer: Hi, I want to exchange a backpack I purchased from BrownBox.
+
+Agent: Hello, thank you for contacting BrownBox customer support. My name is Alex, and I'm here to help you. May I have your order number, please?
+
+Customer: Sure, it's BB987654321.
+
+Agent: Thank you for providing that information. May I know the reason for the exchange?
+
+Customer: I received the backpack, but it's not
+True label: neutral
+Predicted label: negative
+
+Example 6:
+Text: Agent: Hello, thank you for calling BrownBox Customer Support. My name is Jane, how may I assist you today?
+
+Customer: Hi, I am facing issues logging into my account. I have lost my phone and forgotten my password.
+
+Agent: I'm sorry to hear that. Can you please provide me with your email address and order number?
+
+Customer: My email is johndoe@gmail.com, and my order number is 9876543.
+True label: neutral
+Predicted label: negative
+
+Example 7:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Alex. How can I assist you today?
+
+Customer: Hi Alex, I'm calling to inquire about the status of my refund for an air conditioner that I returned.
+
+Agent: I'm sorry to hear that you had to return your air conditioner. I'll be happy to assist you with that. Can you please provide me with your order number and the date of purchase?
+
+Customer: My order
+True label: neutral
+Predicted label: negative
+
+Example 8:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is John. How may I assist you today?
+
+Customer: Hi John, my name is Tom. I want to check the status of my refund for a BP monitor that I returned last week.
+
+Agent: I'm sorry to hear that you had to return the product, Tom. I'll be happy to check the status of your refund. Could you please provide me with your order number?
+
+Customer: Sure
+True label: neutral
+Predicted label: negative
+
+
+neutral -> positive: 2 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Sarah. How may I assist you today?
+
+Customer: Hi Sarah, I recently ordered a DSLR camera from BrownBox, and I was wondering how I can get in touch with the courier service provider associated with the seller to track my order.
+
+Agent: I can definitely help you with that. May I have your order number, please?
+
+Customer: Sure. The order number is #BB123456
+True label: neutral
+Predicted label: positive
+
+Example 2:
+Text: Customer: Hi, I have a question regarding the loyalty program.
+
+Agent: Hello! Thank you for contacting BrownBox customer support. My name is Sarah, and I'm happy to assist you. May I know your name, please?
+
+Customer: Hi, Sarah. My name is Emily.
+
+Agent: Hi, Emily. How can I assist you with the loyalty program?
+
+Customer: I have been purchasing from BrownBox for a while now, and I have accumulated
+True label: neutral
+Predicted label: positive
+
+

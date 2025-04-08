@@ -21,13 +21,14 @@ import time
 import math
 import pickle
 from contextlib import nullcontext
+from collections import deque
 
 import numpy as np
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.distributed import init_process_group, destroy_process_group
 
-from model import GPTConfig, GPT
+from model import GPTConfig, SentimentGPT
 
 # -----------------------------------------------------------------------------
 # default config values designed to train a gpt2 (124M) on OpenWebText
@@ -114,20 +115,53 @@ ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=
 # poor man's data loader
 data_dir = os.path.join('data', dataset)
 def get_batch(split):
-    # We recreate np.memmap every batch to avoid a memory leak, as per
-    # https://stackoverflow.com/questions/45132940/numpy-memmap-memory-usage-want-to-iterate-once/61472122#61472122
-    if split == 'train':
-        data = np.memmap(os.path.join(data_dir, 'train.bin'), dtype=np.uint16, mode='r')
-    else:
-        data = np.memmap(os.path.join(data_dir, 'val.bin'), dtype=np.uint16, mode='r')
-    ix = torch.randint(len(data) - block_size, (batch_size,))
-    x = torch.stack([torch.from_numpy((data[i:i+block_size]).astype(np.int64)) for i in ix])
-    y = torch.stack([torch.from_numpy((data[i+1:i+1+block_size]).astype(np.int64)) for i in ix])
+    with open(os.path.join(data_dir, f'{split}.bin'), 'rb') as f:
+        data = pickle.load(f)
+    
+    # Group samples by class
+    class_indices = {0: [], 1: [], 2: []}  # Initialize with all three classes
+    for i, label in enumerate(data['labels']):
+        class_indices[label].append(i)
+    
+    # Calculate how many samples to take from each class
+    # More balanced distribution: 20% positive, 40% neutral, 40% negative
+    positive_count = max(round(batch_size * 0.20), 1)  # Slightly higher for positive
+    neutral_count = round(batch_size * 0.40)
+    negative_count = batch_size - positive_count - neutral_count
+    
+    # Sample indices
+    indices = []
+    
+    # Handle positive class (will need sampling with replacement)
+    indices.extend(np.random.choice(class_indices[0], positive_count, replace=True))
+    
+    # Sample from neutral class
+    indices.extend(np.random.choice(class_indices[1], neutral_count, replace=False))
+    
+    # Sample from negative class
+    indices.extend(np.random.choice(class_indices[2], negative_count, replace=False))
+    
+    # Shuffle the indices
+    np.random.shuffle(indices)
+    
+    # Get sequences and pad them
+    sequences = [data['texts'][i] for i in indices]
+    max_len = min(max(len(s) for s in sequences), block_size)
+    
+    # Create padded tensor
+    x = torch.zeros((batch_size, max_len), dtype=torch.long)
+    for i, seq in enumerate(sequences):
+        seq_len = min(len(seq), max_len)
+        x[i, :seq_len] = torch.tensor(seq[:seq_len])
+    
+    # Get labels
+    y = torch.tensor([data['labels'][i] for i in indices], dtype=torch.long)
+    
     if device_type == 'cuda':
-        # pin arrays x,y, which allows us to move them to GPU asynchronously (non_blocking=True)
         x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
     else:
         x, y = x.to(device), y.to(device)
+    
     return x, y
 
 # init these up here, can override if init_from='resume' (i.e. from a checkpoint)
@@ -144,17 +178,23 @@ if os.path.exists(meta_path):
     print(f"found vocab_size = {meta_vocab_size} (inside {meta_path})")
 
 # model init
-model_args = dict(n_layer=n_layer, n_head=n_head, n_embd=n_embd, block_size=block_size,
-                  bias=bias, vocab_size=None, dropout=dropout) # start with model_args from command line
+model_args = dict(
+    n_layer=n_layer, 
+    n_head=n_head, 
+    n_embd=n_embd, 
+    block_size=block_size,
+    bias=bias, 
+    vocab_size=None, 
+    dropout=dropout,
+    num_classes=3  # Add this line for sentiment analysis
+)
 if init_from == 'scratch':
-    # init a new model from scratch
     print("Initializing a new model from scratch")
-    # determine the vocab size we'll use for from-scratch training
     if meta_vocab_size is None:
         print("defaulting to vocab_size of GPT-2 to 50304 (50257 rounded up for efficiency)")
     model_args['vocab_size'] = meta_vocab_size if meta_vocab_size is not None else 50304
     gptconf = GPTConfig(**model_args)
-    model = GPT(gptconf)
+    model = SentimentGPT(gptconf)
 elif init_from == 'resume':
     print(f"Resuming training from {out_dir}")
     # resume training from a checkpoint.
@@ -167,7 +207,7 @@ elif init_from == 'resume':
         model_args[k] = checkpoint_model_args[k]
     # create the model
     gptconf = GPTConfig(**model_args)
-    model = GPT(gptconf)
+    model = SentimentGPT(gptconf)
     state_dict = checkpoint['model']
     # fix the keys of the state dictionary :(
     # honestly no idea how checkpoints sometimes get this prefix, have to debug more
@@ -182,7 +222,7 @@ elif init_from.startswith('gpt2'):
     print(f"Initializing from OpenAI GPT-2 weights: {init_from}")
     # initialize from OpenAI GPT-2 weights
     override_args = dict(dropout=dropout)
-    model = GPT.from_pretrained(init_from, override_args)
+    model = SentimentGPT.from_pretrained(init_from, override_args)
     # read off the created config params, so we can store them into checkpoint correctly
     for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size']:
         model_args[k] = getattr(model.config, k)
@@ -218,12 +258,39 @@ def estimate_loss():
     model.eval()
     for split in ['train', 'val']:
         losses = torch.zeros(eval_iters)
+        accuracies = torch.zeros(eval_iters)
+        class_correct = {0: 0, 1: 0, 2: 0}
+        class_total = {0: 0, 1: 0, 2: 0}
+        
         for k in range(eval_iters):
             X, Y = get_batch(split)
             with ctx:
                 logits, loss = model(X, Y)
+                preds = torch.argmax(logits, dim=-1)
+                
+                # Overall accuracy
+                accuracies[k] = (preds == Y).float().mean().item()
+                
+                # Per-class metrics
+                for c in range(3):
+                    class_mask = Y == c
+                    if class_mask.sum() > 0:
+                        class_correct[c] += (preds[class_mask] == c).sum().item()
+                        class_total[c] += class_mask.sum().item()
+                
             losses[k] = loss.item()
-        out[split] = losses.mean()
+        
+        # Calculate average metrics
+        out[f'{split}_loss'] = losses.mean().item()
+        out[f'{split}_acc'] = accuracies.mean().item()
+        
+        # Calculate per-class accuracies
+        for c in range(3):
+            if class_total[c] > 0:
+                out[f'{split}_acc_class_{c}'] = class_correct[c] / class_total[c]
+            else:
+                out[f'{split}_acc_class_{c}'] = 0.0
+    
     model.train()
     return out
 
@@ -246,6 +313,11 @@ if wandb_log and master_process:
     import wandb
     wandb.init(project=wandb_project, name=wandb_run_name, config=config)
 
+# Add before training loop
+patience = 10
+best_val_loss = float('inf')
+no_improvement_count = 0
+
 # training loop
 X, Y = get_batch('train') # fetch the very first batch
 t0 = time.time()
@@ -262,28 +334,53 @@ while True:
     # evaluate the loss on train/val sets and write checkpoints
     if iter_num % eval_interval == 0 and master_process:
         losses = estimate_loss()
-        print(f"step {iter_num}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+        print(f"step {iter_num}: train loss {losses['train_loss']:.4f}, val loss {losses['val_loss']:.4f}")
+        print(f"  Train Accuracy: {losses['train_acc']:.4f}, Val Accuracy: {losses['val_acc']:.4f}")
+        print(f"  Per-class Val Acc: Pos={losses['val_acc_class_0']:.4f}, Neu={losses['val_acc_class_1']:.4f}, Neg={losses['val_acc_class_2']:.4f}")
+        
+        # Early stopping check
+        if losses['val_loss'] < best_val_loss:
+            best_val_loss = losses['val_loss']
+            no_improvement_count = 0
+            # Save best model
+            checkpoint = {
+                'model': raw_model.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'model_args': model_args,
+                'iter_num': iter_num,
+                'best_val_loss': best_val_loss,
+                'config': config,
+            }
+            print(f"saving best model to {out_dir} (new best val loss: {best_val_loss:.4f})")
+            torch.save(checkpoint, os.path.join(out_dir, 'best_ckpt.pt'))
+        else:
+            no_improvement_count += 1
+        
+        # Regular checkpoint saving
+        if always_save_checkpoint:
+            checkpoint = {
+                'model': raw_model.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'model_args': model_args,
+                'iter_num': iter_num,
+                'best_val_loss': best_val_loss,
+                'config': config,
+            }
+            print(f"saving checkpoint to {out_dir}")
+            torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
+        
+        if no_improvement_count >= patience:
+            print(f"Early stopping triggered after {iter_num} iterations")
+            break
         if wandb_log:
             wandb.log({
                 "iter": iter_num,
-                "train/loss": losses['train'],
-                "val/loss": losses['val'],
+                "train/loss": losses['train_loss'],
+                "val/loss": losses['val_loss'],
                 "lr": lr,
                 "mfu": running_mfu*100, # convert to percentage
             })
-        if losses['val'] < best_val_loss or always_save_checkpoint:
-            best_val_loss = losses['val']
-            if iter_num > 0:
-                checkpoint = {
-                    'model': raw_model.state_dict(),
-                    'optimizer': optimizer.state_dict(),
-                    'model_args': model_args,
-                    'iter_num': iter_num,
-                    'best_val_loss': best_val_loss,
-                    'config': config,
-                }
-                print(f"saving checkpoint to {out_dir}")
-                torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
+
     if iter_num == 0 and eval_only:
         break
 

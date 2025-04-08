@@ -10,6 +10,8 @@ https://github.com/huggingface/transformers/blob/main/src/transformers/models/gp
 import math
 import inspect
 from dataclasses import dataclass
+import os
+import pickle
 
 import torch
 import torch.nn as nn
@@ -108,12 +110,13 @@ class Block(nn.Module):
 @dataclass
 class GPTConfig:
     block_size: int = 1024
-    vocab_size: int = 50304 # GPT-2 vocab_size of 50257, padded up to nearest multiple of 64 for efficiency
+    vocab_size: int = 50304
     n_layer: int = 12
     n_head: int = 12
     n_embd: int = 768
     dropout: float = 0.0
-    bias: bool = True # True: bias in Linears and LayerNorms, like GPT-2. False: a bit better and faster
+    bias: bool = True
+    num_classes: int = 3  # Add this for sentiment analysis
 
 class GPT(nn.Module):
 
@@ -184,7 +187,9 @@ class GPT(nn.Module):
         if targets is not None:
             # if we are given some desired targets also calculate the loss
             logits = self.lm_head(x)
-            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
+            # More balanced class weights with lower positive weight, higher neutral weight
+            class_weights = torch.tensor([2.0, 2.5, 1.5], device=device)  # positive, neutral, negative
+            loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), weight=class_weights, ignore_index=-1)
         else:
             # inference-time mini-optimization: only forward the lm_head on the very last position
             logits = self.lm_head(x[:, [-1], :]) # note: using list [-1] to preserve the time dim
@@ -229,7 +234,7 @@ class GPT(nn.Module):
             config_args['dropout'] = override_args['dropout']
         # create a from-scratch initialized minGPT model
         config = GPTConfig(**config_args)
-        model = GPT(config)
+        model = cls(config)
         sd = model.state_dict()
         sd_keys = sd.keys()
         sd_keys = [k for k in sd_keys if not k.endswith('.attn.bias')] # discard this mask / buffer, not a param
@@ -328,3 +333,188 @@ class GPT(nn.Module):
             idx = torch.cat((idx, idx_next), dim=1)
 
         return idx
+
+class SentimentGPT(nn.Module):
+    @classmethod
+    def from_pretrained(cls, model_type, override_args=None):
+        """Load pre-trained GPT-2 and modify for sentiment analysis"""
+        assert model_type in {'gpt2', 'gpt2-medium', 'gpt2-large', 'gpt2-xl'}
+        override_args = override_args or {}  # default to empty dict
+        from transformers import GPT2LMHeadModel
+        print("loading weights from pretrained gpt: %s" % model_type)
+
+        # n_layer, n_head and n_embd are determined from model_type
+        config_args = {
+            'gpt2':         dict(n_layer=12, n_head=12, n_embd=768),  # 124M params
+            'gpt2-medium':  dict(n_layer=24, n_head=16, n_embd=1024), # 350M params
+            'gpt2-large':   dict(n_layer=36, n_head=20, n_embd=1280), # 774M params
+            'gpt2-xl':      dict(n_layer=48, n_head=25, n_embd=1600), # 1558M params
+        }[model_type]
+
+        # Add sentiment-specific config
+        config_args['vocab_size'] = 50257  # always 50257 for GPT model checkpoints
+        config_args['block_size'] = 1024   # always 1024 for GPT model checkpoints
+        config_args['bias'] = True         # always True for GPT model checkpoints
+        config_args['num_classes'] = 3     # for sentiment analysis
+        
+        # Override dropout if specified
+        if 'dropout' in override_args:
+            print(f"overriding dropout rate to {override_args['dropout']}")
+            config_args['dropout'] = override_args['dropout']
+
+        # Create our modified GPT model
+        config = GPTConfig(**config_args)
+        model = cls(config)
+        
+        # Load pre-trained model
+        model_hf = GPT2LMHeadModel.from_pretrained(model_type)
+        sd_hf = model_hf.state_dict()
+
+        # Copy transformer weights (excluding head)
+        sd = model.state_dict()
+        sd_keys = [k for k in sd.keys() if k.startswith('transformer')]
+        sd_keys = [k for k in sd_keys if not k.endswith('.attn.bias')] # discard attention mask
+
+        # Handle special cases for weight copying
+        transposed = ['attn.c_attn.weight', 'attn.c_proj.weight', 'mlp.c_fc.weight', 'mlp.c_proj.weight']
+        
+        for k in sd_keys:
+            hf_k = k.replace('transformer.', 'transformer.')  # adjust key names if needed
+            if any(w in k for w in transposed):
+                # Special handling for weights that need transposition
+                assert sd_hf[hf_k].shape[::-1] == sd[k].shape
+                with torch.no_grad():
+                    sd[k].copy_(sd_hf[hf_k].t())
+            else:
+                # Regular parameter copy
+                assert sd_hf[hf_k].shape == sd[k].shape, f"Shape mismatch: {sd_hf[hf_k].shape} vs {sd[k].shape}"
+                with torch.no_grad():
+                    sd[k].copy_(sd_hf[hf_k])
+
+        # Initialize the classification head from scratch
+        # The head weights are already randomly initialized, so we don't need to do anything
+
+        return model
+
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+        
+        self.transformer = nn.ModuleDict(dict(
+            wte = nn.Embedding(config.vocab_size, config.n_embd),
+            wpe = nn.Embedding(config.block_size, config.n_embd),
+            drop = nn.Dropout(config.dropout),
+            h = nn.ModuleList([Block(config) for _ in range(config.n_layer)]),
+            ln_f = LayerNorm(config.n_embd, bias=config.bias),
+        ))
+        
+        # Classification head remains the same
+        self.classifier = nn.Sequential(
+            nn.Linear(config.n_embd, config.n_embd),
+            nn.LayerNorm(config.n_embd),
+            nn.ReLU(),
+            nn.Dropout(config.dropout),
+            nn.Linear(config.n_embd, config.num_classes)
+        )
+
+        # Init all weights
+        self.apply(self._init_weights)
+        
+        # Special scaled init for projection layers
+        for pn, p in self.named_parameters():
+            if pn.endswith('c_proj.weight'):
+                torch.nn.init.normal_(p, mean=0.0, std=0.02/math.sqrt(2 * config.n_layer))
+
+        print("number of parameters: %.2fM" % (self.get_num_params()/1e6,))
+
+    def get_num_params(self, non_embedding=True):
+        n_params = sum(p.numel() for p in self.parameters())
+        if non_embedding:
+            n_params -= self.transformer.wpe.weight.numel()
+        return n_params
+
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if module.bias is not None:
+                torch.nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+
+    def forward(self, idx, targets=None):
+        device = idx.device
+        b, t = idx.size()
+        assert t <= self.config.block_size, f"Cannot forward sequence of length {t}, block size is only {self.config.block_size}"
+        pos = torch.arange(0, t, dtype=torch.long, device=device)
+
+        # Forward the GPT model
+        tok_emb = self.transformer.wte(idx)
+        pos_emb = self.transformer.wpe(pos)
+        x = self.transformer.drop(tok_emb + pos_emb)
+        for block in self.transformer.h:
+            x = block(x)
+        x = self.transformer.ln_f(x)
+        
+        # Mean pooling
+        x = x.mean(dim=1)
+        
+        # Classification head
+        logits = self.classifier(x)
+        
+        # Apply explicit bias correction to counteract positive bias
+        # This is added to both training and inference
+        bias_correction = torch.tensor([-2.0, 0.8, 1.2], device=device).view(1, -1)
+        logits = logits + bias_correction
+        
+        if targets is not None:
+            # Balanced class weights
+            class_weights = torch.tensor([1.0, 1.5, 1.5], device=device)  # positive, neutral, negative
+            loss = F.cross_entropy(logits, targets, weight=class_weights)
+            return logits, loss
+        return logits, None
+
+    def configure_optimizers(self, weight_decay, learning_rate, betas, device_type):
+        # Same as GPT class
+        param_dict = {pn: p for pn, p in self.named_parameters()}
+        param_dict = {pn: p for pn, p in param_dict.items() if p.requires_grad}
+        decay_params = [p for n, p in param_dict.items() if p.dim() >= 2]
+        nodecay_params = [p for n, p in param_dict.items() if p.dim() < 2]
+        optim_groups = [
+            {'params': decay_params, 'weight_decay': weight_decay},
+            {'params': nodecay_params, 'weight_decay': 0.0}
+        ]
+        num_decay_params = sum(p.numel() for p in decay_params)
+        num_nodecay_params = sum(p.numel() for p in nodecay_params)
+        print(f"num decayed parameter tensors: {len(decay_params)}, with {num_decay_params:,} parameters")
+        print(f"num non-decayed parameter tensors: {len(nodecay_params)}, with {num_nodecay_params:,} parameters")
+        fused_available = 'fused' in inspect.signature(torch.optim.AdamW).parameters
+        use_fused = fused_available and device_type == 'cuda'
+        extra_args = dict(fused=True) if use_fused else dict()
+        optimizer = torch.optim.AdamW(optim_groups, lr=learning_rate, betas=betas, **extra_args)
+        print(f"using fused AdamW: {use_fused}")
+        return optimizer
+
+    def estimate_mfu(self, fwdbwd_per_iter, dt):
+        """ estimate model flops utilization (MFU) in units of A100 bfloat16 peak FLOPS """
+        # first estimate the number of flops we do per iteration.
+        # see PaLM paper Appendix B as ref: https://arxiv.org/abs/2204.02311
+        N = self.get_num_params()
+        cfg = self.config
+        L, H, Q, T = cfg.n_layer, cfg.n_head, cfg.n_embd//cfg.n_head, cfg.block_size
+        flops_per_token = 6*N + 12*L*H*Q*T
+        flops_per_fwdbwd = flops_per_token * T
+        flops_per_iter = flops_per_fwdbwd * fwdbwd_per_iter
+        # express our flops throughput as ratio of A100 bfloat16 peak flops
+        flops_achieved = flops_per_iter * (1.0/dt) # per second
+        flops_promised = 312e12 # A100 GPU bfloat16 peak flops is 312 TFLOPS
+        mfu = flops_achieved / flops_promised
+        return mfu
+
+    def crop_block_size(self, block_size):
+        # model surgery to decrease the block size if necessary
+        assert block_size <= self.config.block_size
+        self.config.block_size = block_size
+        self.transformer.wpe.weight = nn.Parameter(self.transformer.wpe.weight[:block_size])
+        for block in self.transformer.h:
+            if hasattr(block.attn, 'bias'):
+                block.attn.bias = block.attn.bias[:,:,:block_size,:block_size]
