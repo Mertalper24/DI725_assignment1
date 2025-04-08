@@ -1,0 +1,42 @@
+{
+  "os":  "Linux-6.5.0-45-generic-x86_64-with-glibc2.35",
+  "python":  "CPython 3.10.12",
+  "startedAt":  "2025-04-08T11:40:09.101633Z",
+  "args":  [
+    "config/train_sentiment.py",
+    "--compile=False"
+  ],
+  "program":  "/home/ai/DI725_assignment1-main/train.py",
+  "codePath":  "train.py",
+  "email":  "Mert.Alper@skoltech.ru",
+  "root":  "/home/ai/DI725_assignment1-main",
+  "host":  "tpc-0103",
+  "executable":  "/usr/bin/python3",
+  "codePathLocal":  "train.py",
+  "cpu_count":  10,
+  "cpu_count_logical":  20,
+  "gpu":  "Quadro RTX 8000",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "490577010688",
+      "used":  "379499462656"
+    }
+  },
+  "memory":  {
+    "total":  "33561300992"
+  },
+  "cpu":  {
+    "count":  10,
+    "countLogical":  20
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "Quadro RTX 8000",
+      "memoryTotal":  "51539607552",
+      "cudaCores":  4608,
+      "architecture":  "Turing"
+    }
+  ],
+  "cudaVersion":  "12.6"
+}

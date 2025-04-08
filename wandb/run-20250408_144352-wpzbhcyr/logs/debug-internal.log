@@ -1,0 +1,16 @@
+{"time":"2025-04-08T14:43:52.215405104+03:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-04-08T14:43:52.215418861+03:00","level":"INFO","msg":"created symlink","path":"/home/ai/DI725_assignment1-main/wandb/run-20250408_144352-wpzbhcyr/logs/debug-core.log"}
+{"time":"2025-04-08T14:43:52.319324114+03:00","level":"INFO","msg":"created new stream","id":"wpzbhcyr"}
+{"time":"2025-04-08T14:43:52.319344328+03:00","level":"INFO","msg":"stream: started","id":"wpzbhcyr"}
+{"time":"2025-04-08T14:43:52.319401925+03:00","level":"INFO","msg":"writer: Do: started","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T14:43:52.319410111+03:00","level":"INFO","msg":"sender: started","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T14:43:52.319438475+03:00","level":"INFO","msg":"handler: started","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T14:43:52.613285734+03:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-08T15:19:52.637544236+03:00","level":"INFO","msg":"stream: closing","id":"wpzbhcyr"}
+{"time":"2025-04-08T15:19:52.637560835+03:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-08T15:19:52.637896421+03:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-08T15:19:53.3911251+03:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-08T15:19:53.784734122+03:00","level":"INFO","msg":"handler: closed","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T15:19:53.784789389+03:00","level":"INFO","msg":"writer: Close: closed","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T15:19:53.784793535+03:00","level":"INFO","msg":"sender: closed","stream_id":"wpzbhcyr"}
+{"time":"2025-04-08T15:19:53.784823451+03:00","level":"INFO","msg":"stream: closed","id":"wpzbhcyr"}

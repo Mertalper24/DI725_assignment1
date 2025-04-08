@@ -1,35 +1,35 @@
-SENTIMENT ANALYSIS EVALUATION RESULTS (trained-from-scratch)
+SENTIMENT ANALYSIS EVALUATION RESULTS (fine-tuned)
 ==================================================
 
-Accuracy: 0.8660
-F1 Score (micro): 0.8660
-F1 Score (macro): 0.8008
-F1 Score (weighted): 0.8651
+Accuracy: 0.8763
+F1 Score (micro): 0.8763
+F1 Score (macro): 0.8086
+F1 Score (weighted): 0.8752
 
 F1 Scores per class:
   positive: 0.6667
-  neutral: 0.8785
-  negative: 0.8571
+  neutral: 0.8800
+  negative: 0.8791
 
-Precision (weighted): 0.8682
-Recall (weighted): 0.8660
+Precision (weighted): 0.8913
+Recall (weighted): 0.8763
 
 Classification Report:
               precision    recall  f1-score   support
 
     positive       1.00      0.50      0.67         2
-     neutral       0.89      0.87      0.88        54
-    negative       0.84      0.88      0.86        41
+     neutral       0.96      0.81      0.88        54
+    negative       0.80      0.98      0.88        41
 
-    accuracy                           0.87        97
-   macro avg       0.91      0.75      0.80        97
-weighted avg       0.87      0.87      0.87        97
+    accuracy                           0.88        97
+   macro avg       0.92      0.76      0.81        97
+weighted avg       0.89      0.88      0.88        97
 
 
 Confusion Matrix:
 [[ 1  1  0]
- [ 0 47  7]
- [ 0  5 36]]
+ [ 0 44 10]
+ [ 0  1 40]]
 
 
 Reasons for Evaluation Metric Choice:

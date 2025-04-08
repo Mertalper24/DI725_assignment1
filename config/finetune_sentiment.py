@@ -11,8 +11,8 @@ always_save_checkpoint = True
 
 # Wandb logging (optional)
 wandb_log = False
-wandb_project = 'sentiment-ft'
-wandb_run_name = 'ft-' + str(time.time())
+wandb_project = 'sentiment-analysis2'
+wandb_run_name = 'gpt-sentiment-finetuned2'
 
 # Dataset config
 dataset = 'customer_service'

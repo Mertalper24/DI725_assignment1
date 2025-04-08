@@ -1,0 +1,16 @@
+{"time":"2025-04-08T14:40:09.102918794+03:00","level":"INFO","msg":"using version","core version":"0.19.1"}
+{"time":"2025-04-08T14:40:09.102929845+03:00","level":"INFO","msg":"created symlink","path":"/home/ai/DI725_assignment1-main/wandb/run-20250408_144009-t1cc52lx/logs/debug-core.log"}
+{"time":"2025-04-08T14:40:09.207307457+03:00","level":"INFO","msg":"created new stream","id":"t1cc52lx"}
+{"time":"2025-04-08T14:40:09.207329357+03:00","level":"INFO","msg":"stream: started","id":"t1cc52lx"}
+{"time":"2025-04-08T14:40:09.207368975+03:00","level":"INFO","msg":"writer: Do: started","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:40:09.207419045+03:00","level":"INFO","msg":"handler: started","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:40:09.207484175+03:00","level":"INFO","msg":"sender: started","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:40:09.561587108+03:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-08T14:43:19.668136+03:00","level":"INFO","msg":"stream: closing","id":"t1cc52lx"}
+{"time":"2025-04-08T14:43:19.668155812+03:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-08T14:43:19.668515373+03:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-08T14:43:20.512683343+03:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-08T14:43:20.782076867+03:00","level":"INFO","msg":"handler: closed","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:43:20.782097343+03:00","level":"INFO","msg":"sender: closed","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:43:20.782094396+03:00","level":"INFO","msg":"writer: Close: closed","stream_id":"t1cc52lx"}
+{"time":"2025-04-08T14:43:20.782137545+03:00","level":"INFO","msg":"stream: closed","id":"t1cc52lx"}

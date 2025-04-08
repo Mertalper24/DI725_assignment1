@@ -1,0 +1,195 @@
+step 0: train loss 1.1019, val loss 1.1028
+  Train Accuracy: 0.4031, Val Accuracy: 0.4062
+  Per-class Val Acc: Pos=0.0000, Neu=1.0000, Neg=0.0000
+saving best model to out-sentiment-ft (new best val loss: 1.1028)
+saving checkpoint to out-sentiment-ft
+iter 0: loss 1.0893, time 24670.79ms, mfu -100.00%
+iter 10: loss 1.1112, time 1655.57ms, mfu 2.54%
+iter 20: loss 1.0815, time 1641.53ms, mfu 2.55%
+iter 30: loss 1.0659, time 1632.09ms, mfu 2.55%
+iter 40: loss 1.0963, time 1536.80ms, mfu 2.57%
+step 50: train loss 1.0491, val loss 1.0553
+  Train Accuracy: 0.4109, Val Accuracy: 0.4062
+  Per-class Val Acc: Pos=0.0000, Neu=0.0000, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 1.0553)
+saving checkpoint to out-sentiment-ft
+iter 50: loss 0.9496, time 26768.19ms, mfu 2.33%
+iter 60: loss 0.8784, time 1518.75ms, mfu 2.37%
+iter 70: loss 0.8927, time 1519.29ms, mfu 2.41%
+iter 80: loss 0.7639, time 1528.59ms, mfu 2.45%
+iter 90: loss 0.7706, time 1520.07ms, mfu 2.48%
+step 100: train loss 0.8698, val loss 0.8623
+  Train Accuracy: 0.5375, Val Accuracy: 0.5469
+  Per-class Val Acc: Pos=0.0000, Neu=0.3462, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.8623)
+saving checkpoint to out-sentiment-ft
+iter 100: loss 0.8599, time 26911.43ms, mfu 2.25%
+iter 110: loss 0.6836, time 1518.32ms, mfu 2.30%
+iter 120: loss 0.5365, time 1530.21ms, mfu 2.34%
+iter 130: loss 0.5348, time 1558.31ms, mfu 2.38%
+iter 140: loss 0.3978, time 1535.08ms, mfu 2.42%
+step 150: train loss 0.8985, val loss 0.9142
+  Train Accuracy: 0.5266, Val Accuracy: 0.5344
+  Per-class Val Acc: Pos=0.0000, Neu=0.3154, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 150: loss 0.4350, time 24880.20ms, mfu 2.19%
+iter 160: loss 0.3251, time 1518.90ms, mfu 2.25%
+iter 170: loss 0.3439, time 1514.51ms, mfu 2.30%
+iter 180: loss 0.3218, time 1537.01ms, mfu 2.35%
+iter 190: loss 0.2344, time 1650.60ms, mfu 2.37%
+step 200: train loss 0.7247, val loss 0.7918
+  Train Accuracy: 0.6094, Val Accuracy: 0.6156
+  Per-class Val Acc: Pos=0.0000, Neu=0.5154, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.7918)
+saving checkpoint to out-sentiment-ft
+iter 200: loss 0.1487, time 28963.39ms, mfu 2.15%
+iter 210: loss 0.2428, time 1607.81ms, mfu 2.19%
+iter 220: loss 0.1671, time 1632.92ms, mfu 2.23%
+iter 230: loss 0.1909, time 1661.00ms, mfu 2.26%
+iter 240: loss 0.2967, time 1660.30ms, mfu 2.29%
+step 250: train loss 0.4313, val loss 0.5319
+  Train Accuracy: 0.8141, Val Accuracy: 0.7641
+  Per-class Val Acc: Pos=0.5417, Neu=0.6308, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.5319)
+saving checkpoint to out-sentiment-ft
+iter 250: loss 0.1611, time 28936.72ms, mfu 2.08%
+iter 260: loss 0.1556, time 1599.14ms, mfu 2.13%
+iter 270: loss 0.2339, time 1612.30ms, mfu 2.18%
+iter 280: loss 0.2023, time 1616.81ms, mfu 2.22%
+iter 290: loss 0.0897, time 1631.08ms, mfu 2.26%
+step 300: train loss 0.3344, val loss 0.4480
+  Train Accuracy: 0.8625, Val Accuracy: 0.8016
+  Per-class Val Acc: Pos=0.6167, Neu=0.6885, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.4480)
+saving checkpoint to out-sentiment-ft
+iter 300: loss 0.1893, time 28899.24ms, mfu 2.05%
+iter 310: loss 0.2277, time 1607.97ms, mfu 2.10%
+iter 320: loss 0.1566, time 1622.75ms, mfu 2.15%
+iter 330: loss 0.1163, time 1648.21ms, mfu 2.19%
+iter 340: loss 0.2150, time 1634.43ms, mfu 2.23%
+step 350: train loss 0.2775, val loss 0.3741
+  Train Accuracy: 0.8797, Val Accuracy: 0.7656
+  Per-class Val Acc: Pos=0.4333, Neu=0.6846, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.3741)
+saving checkpoint to out-sentiment-ft
+iter 350: loss 0.0314, time 28409.45ms, mfu 2.02%
+iter 360: loss 0.1652, time 1590.50ms, mfu 2.09%
+iter 370: loss 0.0909, time 1602.91ms, mfu 2.14%
+iter 380: loss 0.1480, time 1607.85ms, mfu 2.19%
+iter 390: loss 0.0885, time 1593.59ms, mfu 2.23%
+step 400: train loss 0.2933, val loss 0.3300
+  Train Accuracy: 0.8641, Val Accuracy: 0.8938
+  Per-class Val Acc: Pos=1.0000, Neu=0.7385, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.3300)
+saving checkpoint to out-sentiment-ft
+iter 400: loss 0.0162, time 28335.16ms, mfu 2.03%
+iter 410: loss 0.5544, time 1646.53ms, mfu 2.08%
+iter 420: loss 0.0219, time 1654.89ms, mfu 2.13%
+iter 430: loss 0.0672, time 1634.53ms, mfu 2.17%
+iter 440: loss 0.1427, time 1618.92ms, mfu 2.21%
+step 450: train loss 0.2773, val loss 0.2730
+  Train Accuracy: 0.8781, Val Accuracy: 0.8734
+  Per-class Val Acc: Pos=1.0000, Neu=0.6885, Neg=1.0000
+saving best model to out-sentiment-ft (new best val loss: 0.2730)
+saving checkpoint to out-sentiment-ft
+iter 450: loss 0.0956, time 28435.66ms, mfu 2.01%
+iter 460: loss 0.0458, time 1617.86ms, mfu 2.07%
+iter 470: loss 0.1661, time 1628.62ms, mfu 2.12%
+iter 480: loss 0.1451, time 1640.07ms, mfu 2.16%
+iter 490: loss 0.0146, time 1610.09ms, mfu 2.21%
+step 500: train loss 0.3283, val loss 0.3872
+  Train Accuracy: 0.8547, Val Accuracy: 0.7609
+  Per-class Val Acc: Pos=0.4750, Neu=0.6538, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 500: loss 0.0279, time 26078.63ms, mfu 2.00%
+iter 510: loss 0.0698, time 1597.62ms, mfu 2.07%
+iter 520: loss 0.0675, time 1582.36ms, mfu 2.13%
+iter 530: loss 0.0620, time 1591.18ms, mfu 2.18%
+iter 540: loss 0.2871, time 1579.95ms, mfu 2.23%
+step 550: train loss 0.1066, val loss 0.1888
+  Train Accuracy: 0.9688, Val Accuracy: 0.9359
+  Per-class Val Acc: Pos=1.0000, Neu=0.8923, Neg=0.9500
+saving best model to out-sentiment-ft (new best val loss: 0.1888)
+saving checkpoint to out-sentiment-ft
+iter 550: loss 0.0421, time 27792.43ms, mfu 2.02%
+iter 560: loss 0.0556, time 1602.64ms, mfu 2.08%
+iter 570: loss 0.0276, time 1615.31ms, mfu 2.13%
+iter 580: loss 0.0082, time 1624.06ms, mfu 2.18%
+iter 590: loss 0.0528, time 1624.54ms, mfu 2.22%
+step 600: train loss 0.2213, val loss 0.2820
+  Train Accuracy: 0.8969, Val Accuracy: 0.8234
+  Per-class Val Acc: Pos=0.5833, Neu=0.7577, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 600: loss 0.0209, time 27102.51ms, mfu 2.01%
+iter 610: loss 0.1608, time 1639.83ms, mfu 2.07%
+iter 620: loss 0.0158, time 1622.72ms, mfu 2.12%
+iter 630: loss 0.0188, time 1603.90ms, mfu 2.17%
+iter 640: loss 0.0233, time 1536.58ms, mfu 2.23%
+step 650: train loss 0.1746, val loss 0.2609
+  Train Accuracy: 0.9312, Val Accuracy: 0.9203
+  Per-class Val Acc: Pos=1.0000, Neu=0.8231, Neg=0.9808
+saving checkpoint to out-sentiment-ft
+iter 650: loss 0.0569, time 28194.04ms, mfu 2.02%
+iter 660: loss 0.0072, time 1652.52ms, mfu 2.07%
+iter 670: loss 0.0066, time 1663.80ms, mfu 2.12%
+iter 680: loss 0.0610, time 1665.89ms, mfu 2.16%
+iter 690: loss 0.0945, time 1656.88ms, mfu 2.20%
+step 700: train loss 0.2112, val loss 0.3107
+  Train Accuracy: 0.9141, Val Accuracy: 0.9047
+  Per-class Val Acc: Pos=1.0000, Neu=0.7654, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 700: loss 0.0091, time 27022.53ms, mfu 1.99%
+iter 710: loss 0.0296, time 1661.42ms, mfu 2.05%
+iter 720: loss 0.0458, time 1660.20ms, mfu 2.10%
+iter 730: loss 0.0064, time 1724.75ms, mfu 2.13%
+iter 740: loss 0.0240, time 1745.11ms, mfu 2.16%
+step 750: train loss 0.2187, val loss 0.2995
+  Train Accuracy: 0.9109, Val Accuracy: 0.8031
+  Per-class Val Acc: Pos=0.4583, Neu=0.7654, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 750: loss 0.0087, time 27150.99ms, mfu 1.96%
+iter 760: loss 0.0136, time 1652.09ms, mfu 2.02%
+iter 770: loss 0.0252, time 1678.62ms, mfu 2.07%
+iter 780: loss 0.0139, time 1661.13ms, mfu 2.11%
+iter 790: loss 0.0082, time 1688.70ms, mfu 2.15%
+step 800: train loss 0.2347, val loss 0.2469
+  Train Accuracy: 0.9031, Val Accuracy: 0.9062
+  Per-class Val Acc: Pos=1.0000, Neu=0.7692, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 800: loss 0.0156, time 27085.68ms, mfu 1.95%
+iter 810: loss 0.0078, time 1652.97ms, mfu 2.01%
+iter 820: loss 0.0122, time 1716.63ms, mfu 2.06%
+iter 830: loss 0.0596, time 1619.29ms, mfu 2.11%
+iter 840: loss 0.0116, time 1668.17ms, mfu 2.15%
+step 850: train loss 0.1077, val loss 0.2017
+  Train Accuracy: 0.9531, Val Accuracy: 0.9438
+  Per-class Val Acc: Pos=1.0000, Neu=0.8808, Neg=0.9808
+saving checkpoint to out-sentiment-ft
+iter 850: loss 0.0076, time 26092.56ms, mfu 1.95%
+iter 860: loss 0.0055, time 1575.69ms, mfu 2.03%
+iter 870: loss 0.0071, time 1613.90ms, mfu 2.08%
+iter 880: loss 0.0133, time 1591.10ms, mfu 2.14%
+iter 890: loss 0.0468, time 1591.03ms, mfu 2.19%
+step 900: train loss 0.1822, val loss 0.2955
+  Train Accuracy: 0.9359, Val Accuracy: 0.9031
+  Per-class Val Acc: Pos=1.0000, Neu=0.7615, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 900: loss 0.0078, time 27227.14ms, mfu 1.99%
+iter 910: loss 0.0059, time 1663.42ms, mfu 2.04%
+iter 920: loss 0.0052, time 1575.84ms, mfu 2.10%
+iter 930: loss 0.0051, time 1766.53ms, mfu 2.13%
+iter 940: loss 0.0306, time 1756.98ms, mfu 2.16%
+step 950: train loss 0.2200, val loss 0.2431
+  Train Accuracy: 0.9203, Val Accuracy: 0.9203
+  Per-class Val Acc: Pos=1.0000, Neu=0.8038, Neg=1.0000
+saving checkpoint to out-sentiment-ft
+iter 950: loss 0.0265, time 27420.96ms, mfu 1.96%
+iter 960: loss 0.0344, time 1681.81ms, mfu 2.01%
+iter 970: loss 0.0093, time 1642.21ms, mfu 2.07%
+iter 980: loss 0.0352, time 1669.04ms, mfu 2.11%
+iter 990: loss 0.0036, time 1687.63ms, mfu 2.15%
+step 1000: train loss 0.1543, val loss 0.2071
+  Train Accuracy: 0.9344, Val Accuracy: 0.9328
+  Per-class Val Acc: Pos=1.0000, Neu=0.8538, Neg=0.9808
+saving checkpoint to out-sentiment-ft
+iter 1000: loss 0.0074, time 27245.01ms, mfu 1.95%

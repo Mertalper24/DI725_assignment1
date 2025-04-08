@@ -1,0 +1,146 @@
+ERROR ANALYSIS
+==============
+
+neutral -> negative: 10 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Customer: Hi, I need help with returning a toy I purchased from BrownBox.
+
+Agent: Hi there, I'm happy to assist you with that. May I have your name and order number, please?
+
+Customer: Sure, my name is Sarah, and my order number is 987654321.
+
+Agent: Thank you, Sarah. Let me check the details of your order. Please hold for a moment.
+
+(Customer is put on hold for a
+True label: neutral
+Predicted label: negative
+
+Example 2:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is John. How can I assist you today?
+
+Customer: Hi John, I recently purchased a headphone from your website, and I noticed that the price for the same headphone has now reduced. Can you explain why this happened?
+
+Agent: I'm sorry to hear that the price for the headphone you purchased has reduced. May I know your order number and the date of purchase?
+
+Customer: Sure, my order
+True label: neutral
+Predicted label: negative
+
+Example 3:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Alex. How may I assist you today?
+
+Customer: Hi Alex, I recently purchased a microwave oven from your website, and I noticed a mismatch in the warranty terms between the website and the physical warranty card that came with the product.
+
+Agent: I'm sorry to hear that, sir. Can you please provide me with your order number and the details of the warranty card?
+
+Customer: Sure, my
+True label: neutral
+Predicted label: negative
+
+Example 4:
+Text: Customer: Hi, I need some help with claiming warranty on a replacement product for my air conditioner that I purchased from BrownBox.
+
+Agent: Hello, and thank you for contacting BrownBox customer support. I'm sorry to hear that you're having issues with your air conditioner. Can I have your order number and name, please?
+
+Customer: Sure. My order number is 987654 and my name is John Smith.
+
+Agent: Thank you, John. Let
+True label: neutral
+Predicted label: negative
+
+Example 5:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Alex. How can I assist you today?
+
+Customer: Hi Alex, I recently purchased a speaker from your website, and it arrived damaged. I would like to return it and receive a replacement. Can you help me with this?
+
+Agent: I'm sorry to hear that, sir. I'd be happy to assist you with that. May I know the order number and the name of the product you wish to
+True label: neutral
+Predicted label: negative
+
+Example 6:
+Text: Agent: Hello, thank you for contacting BrownBox customer support. How may I assist you today?
+
+Customer: Hi, I recently purchased a ceiling fan from your website, and it's not working correctly. I want to claim warranty for it.
+
+Agent: I'm sorry to hear that you're having trouble with your ceiling fan. I'd be happy to assist you with the warranty claim process. Could you please provide me with your order number and the issue you're facing with the
+True label: neutral
+Predicted label: negative
+
+Example 7:
+Text: Agent: Hello, thank you for contacting BrownBox customer support. My name is John. How may I assist you today?
+
+Customer: Hi John, I received the wrong item in my order. I ordered a laptop, but I received a tablet instead.
+
+Agent: I'm sorry to hear that. May I know your order number and the registered email address?
+
+Customer: Sure, my order number is #987654321, and my email address is xyz@
+True label: neutral
+Predicted label: negative
+
+Example 8:
+Text: Agent: Thank you for calling BrownBox Customer Support. This is Sarah. How may I assist you today?
+
+Customer: Hi Sarah, I recently received an inverter that I ordered from your website, but it's not working correctly. I would like to return it and get a replacement.
+
+Agent: I'm sorry to hear that. May I have your order number, please?
+
+Customer: Sure, my order number is #BB123456.
+
+Agent: Thank
+True label: neutral
+Predicted label: negative
+
+Example 9:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Alex. How can I assist you today?
+
+Customer: Hi Alex, I'm calling to inquire about the status of my refund for an air conditioner that I returned.
+
+Agent: I'm sorry to hear that you had to return your air conditioner. I'll be happy to assist you with that. Can you please provide me with your order number and the date of purchase?
+
+Customer: My order
+True label: neutral
+Predicted label: negative
+
+Example 10:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is John. How may I assist you today?
+
+Customer: Hi John, my name is Tom. I want to check the status of my refund for a BP monitor that I returned last week.
+
+Agent: I'm sorry to hear that you had to return the product, Tom. I'll be happy to check the status of your refund. Could you please provide me with your order number?
+
+Customer: Sure
+True label: neutral
+Predicted label: negative
+
+
+positive -> neutral: 1 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is John. How may I assist you today?
+
+Customer: Hi John, I recently purchased a Juicer/Mixer/Grinder from BrownBox, and I wanted to confirm the order status.
+
+Agent: Sure, I can help you with that. May I have your order number, please?
+
+Customer: Yes, it's 987654.
+
+Agent: Thank you. Let me check the
+True label: positive
+Predicted label: neutral
+
+
+negative -> neutral: 1 instances
+--------------------------------------------------------------------------------
+Example 1:
+Text: Agent: Thank you for calling BrownBox Customer Support. My name is Jane. How may I assist you today?
+
+Customer: Hi Jane. I recently purchased a computer monitor from your website, but it's not working correctly. I want to return it or exchange it for a new one.
+
+Agent: I'm sorry to hear that, sir. May I have your name and order number, please?
+
+Customer: My name is John, and my order number is BB123
+True label: negative
+Predicted label: neutral
+
+

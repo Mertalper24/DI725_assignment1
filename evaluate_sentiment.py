@@ -208,46 +208,6 @@ def plot_confidence_distribution(confidence_scores, y_true, y_pred, output_dir):
     plt.savefig(os.path.join(plots_dir, 'confidence_by_class.png'))
     plt.close()
 
-def write_error_analysis(texts, y_true, y_pred, encoder, output_dir, top_n=10):
-    """Write error analysis to a file"""
-    errors = []
-    
-    for i, (text, true_label, pred_label) in enumerate(zip(texts, y_true, y_pred)):
-        if true_label != pred_label:
-            # Decode the text
-            decoded_text = encoder.decode(text[:100])  # First 100 tokens for brevity
-            
-            errors.append({
-                'text': decoded_text,
-                'true_label': ['positive', 'neutral', 'negative'][true_label],
-                'predicted_label': ['positive', 'neutral', 'negative'][pred_label]
-            })
-    
-    # Sort errors by confusion type
-    error_types = {}
-    for error in errors:
-        error_type = f"{error['true_label']} -> {error['predicted_label']}"
-        if error_type not in error_types:
-            error_types[error_type] = []
-        error_types[error_type].append(error)
-    
-    # Open with UTF-8 encoding
-    with open(os.path.join(output_dir, 'error_analysis.txt'), 'w', encoding='utf-8') as f:
-        f.write("ERROR ANALYSIS\n")
-        f.write("==============\n\n")
-        
-        for error_type, error_list in error_types.items():
-            f.write(f"{error_type}: {len(error_list)} instances\n")
-            f.write("-" * 80 + "\n")
-            
-            # Write top N examples for each error type
-            for i, error in enumerate(error_list[:top_n]):
-                f.write(f"Example {i+1}:\n")
-                f.write(f"Text: {error['text']}\n")
-                f.write(f"True label: {error['true_label']}\n")
-                f.write(f"Predicted label: {error['predicted_label']}\n\n")
-            
-            f.write("\n")
 
 def main():
     print("Loading model...")
@@ -324,9 +284,6 @@ def main():
     plot_confidence_distribution(confidence_scores, y_true, y_pred, output_dir)
     print(f"Confidence distribution plots saved in '{output_dir}/plots' directory")
     
-    # Generate error analysis
-    write_error_analysis(texts, y_true, y_pred, enc, output_dir)
-    print(f"Error analysis saved as '{output_dir}/error_analysis.txt'")
     
     # Save metrics to file
     with open(os.path.join(output_dir, 'evaluation_metrics.txt'), 'w') as f:

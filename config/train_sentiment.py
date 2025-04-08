@@ -8,8 +8,8 @@ log_interval = 10
 always_save_checkpoint = True
 
 wandb_log = False
-wandb_project = 'sentiment-analysis'
-wandb_run_name = 'gpt-sentiment'
+wandb_project = 'sentiment-analysis2'
+wandb_run_name = 'gpt-sentiment-scratch2'
 
 dataset = 'customer_service'
 gradient_accumulation_steps = 1
